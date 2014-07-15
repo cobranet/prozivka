@@ -5,7 +5,11 @@ class WaitersController < ApplicationController
     @waiters = Waiter.all
   end
   def create
-    Waiter.try_to_create(current_user)
-    redirect_to :root
+    g = Waiter.try_to_create(current_user)
+    if g == nil 
+      redirect_to :root
+    else
+      redirect_to game_path(g)
+    end
   end
 end
