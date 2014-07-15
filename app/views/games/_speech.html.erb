@@ -1,20 +1,36 @@
   <% @game.last_five.each do |speech|%>
      <% if @game.left  == speech.user_id %>
-      <%  cls = "uleft" %>
+      <%  cls = "left uleft" %>
       <%  img = @game.left_user.image %> 
       <%  left = true %>
     <% else %> 
-      <% cls ="top uright" %> 
+      <% cls ="right uright" %> 
       <% img = @game.right_user.image %> 
       <% left = false %> 
     <% end %>
     <% if left == false %> 
-      <%= tag("image",{id: "imgrb#{speech.rb}", src: img , class: "img#{cls}"}) %>
+          <table class="spp"><tr><td>
+	  <%= tag("div",{ id: "rb#{speech.rb}", class: "triangle-right #{cls}"},true) %>
+            <%= speech.speech %>
+	  
+            </div>
+          </td>
+          <td>  
+            <div>
+	    <%= tag("image",{id: "imgrb#{speech.rb}", src: img , class: "img#{cls}"}) %>               </div>
+	  </td>
+	  </tr></table>
     <% end %> 
-    <%= tag("p",{ id: "rb#{speech.rb}", class: "triangle-isosceles #{cls}"},true) %>
-      <%= speech.speech %>
-    </p>
+
     <% if left == true %> 
+      <table class="spp"><tr><td>
       <%= tag("image",{id: "imgrb#{speech.rb}", src: img , class: "img#{cls}" }) %>
+       </td> 
+       <td>
+	  <%= tag("p",{ id: "rb#{speech.rb}", class: "triangle-right #{cls}"},true) %>
+            <%= speech.speech %>
+          </p>
+        <td></tr></table>
     <% end %> 
   <% end %>
+
