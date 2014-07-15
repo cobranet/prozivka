@@ -1,0 +1,18 @@
+
+<% content_for :login do %>
+  <%= render "shared/signinout" %>
+<% end %>
+
+
+<% content_for :main do %>
+  <%= render "speech" %>
+  <% if @game.onmove == current_user.id %> 
+    <%= text_field_tag("new_speech",'',class: "newspeach" ,id: "new_speech" , maxlenght: 80 ) %><br/>
+    <%= tag("button",{class: "btn btn-primary bthint",id: "nsbutton" , data: { game: @game.id }   },true) %>
+	  <i class="icon-white icon-hand-right"> </i>
+	 Isprozivaj!! 
+        </button> 
+  <% else %> 
+    <%= "Waiting for #{@game.user_on_move.name}" %>
+  <% end %>
+<%end%>

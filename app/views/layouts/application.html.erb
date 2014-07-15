@@ -7,6 +7,14 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <% if current_user %> 
+    <%= content_tag( "div",id: "maindata" , data: {  userid: current_user.id }) do %>
+    <%end%>
+  <% end %>
+  <% if @game != nil %>
+    <%= content_tag( "div",id: "gamedata" , data: {  gameid: @game.id , onmove: @game.onmove }) do %>
+    <%end%>
+  <%end%>
   <div class = "container"> 
     <% if @show_login %> 
       <div class = "row" id="clogin" %> 
@@ -19,7 +27,7 @@
 	 <%= yield :title %>
       </div> 
     <% end %>
-    <div class = "row" id="main">
+    <div class = "row lll" id="main">
       <%= yield :main %>
     </div>
   </div>

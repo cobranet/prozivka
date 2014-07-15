@@ -1,5 +1,11 @@
 Prozivka::Application.routes.draw do
-  resources :games
+  resources :games do 
+    member do
+      get  'last_five'
+      get  'actions'
+      post 'make_speech'
+    end
+  end
 
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
