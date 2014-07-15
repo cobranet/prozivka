@@ -9,7 +9,8 @@
       <% left = false %> 
     <% end %>
     <% if left == false %> 
-          <table class="spp"><tr><td>
+          <table class="spp"><tr>
+	  <td class="rightspeech">
 	  <%= tag("div",{ id: "rb#{speech.rb}", class: "triangle-right #{cls}"},true) %>
             <%= speech.speech %>
 	  
@@ -23,7 +24,8 @@
     <% end %> 
 
     <% if left == true %> 
-      <table class="spp"><tr><td>
+      <table class="spp"><tr>
+        <td class="leftimage">
       <%= tag("image",{id: "imgrb#{speech.rb}", src: img , class: "img#{cls}" }) %>
        </td> 
        <td>

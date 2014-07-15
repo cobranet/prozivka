@@ -1310,6 +1310,14 @@
 
 }
 
+td.rightspeech {
+    text-align: left;
+
+}
+td.leftimage {
+    text-align: right;
+}
+
 .spp {
     width:100%;
 }
