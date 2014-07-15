@@ -1,0 +1,27 @@
+
+<% content_for :login do %>
+  <%= render "shared/signinout" %>
+<% end %>
+
+
+<% content_for :title do %>
+    <h1>Prozivka!</h1>
+    <p>
+      <% if current_user %> 
+        <a data-method="post" rel="nofollow"  href="/waiters"  class="btn btn-primary btn-lg" role="button">START!</a>
+      <% else %>
+        <a data-method="post" rel="nofollow" href ="/auth/facebook"  class="btn btn-primary btn-lg" role="button">Facebook login</a>
+      <% end %>
+    </p>
+<% end %>
+
+
+<% content_for :main do %>
+  <% @waiters.each do |waiter| %> 
+    <% user = User.find(waiter.user_id) %>  
+    <div class ="waiter">
+      <%= tag("image",{src: user.image , class: "userimages"}) %>
+      <%= user.name %>
+    </div>
+  <% end %> 
+<% end %>

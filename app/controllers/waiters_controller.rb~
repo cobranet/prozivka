@@ -1,0 +1,6 @@
+class WaitersController < ApplicationController
+  def index
+    @show_login = true
+    @show_title = true
+  end
+end

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Prozivka</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div class = "container"> 
+    <% if @show_login %> 
+      <div class = "row" id="login" %> 
+        <%= yield :login  %>
+      </div>
+    <% end %> 
+    
+    <% if @show_title %> 
+      <div class = "row" id="title" 
+	 <%= yield :title %>
+      </div> 
+  <% end %>
+  <%= yield %>
+</div>
+</body>
+</html>

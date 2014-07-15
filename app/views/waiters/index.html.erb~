@@ -1,0 +1,11 @@
+<div class="jumbotron">
+	<h1>Prozivka!</h1>
+        <p>
+	   <% if current_user %> 
+           <a data-method="post" rel="nofollow"  href="/waiters/create"  class="btn btn-primary btn-lg" role="button">START!</a>
+	   <% else %>
+	   <a data-method="post" rel="nofollow" href ="/auth/facebook"  class="btn btn-primary btn-lg" role="button">Facebook login</a>
+	   <% end %>
+	   
+        </p>
+</div>
