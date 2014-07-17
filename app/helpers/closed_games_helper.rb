@@ -1,0 +1,2 @@
+module ClosedGamesHelper
+end

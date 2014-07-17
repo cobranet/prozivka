@@ -10,6 +10,11 @@ class WaitersController < ApplicationController
     if g == nil 
       redirect_to :root
     else
+      atr = { action: 'startgame' ,
+             gameid: g.id } 
+      FayeRails::Controller.publish("/chat#{g.left}" ,atr)        
+      FayeRails::Controller.publish("/chat#{g.right}" ,atr)        
+      FayeRails::Controller.publish("/chat#{g.judge}" ,atr)        
       redirect_to game_path(g)
     end
   end

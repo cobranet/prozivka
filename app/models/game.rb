@@ -1,15 +1,10 @@
 class Game < ActiveRecord::Base
-  def self.restart_game(id)
+  def self.delete_game(id)
     Speech.delete_all(game_id: id) 
-    Round.delete_all(game_id: id);
-    g = Game.find(id) 
-    g.round = 0
-    g.onmove = g.judge
-    g.scoreright = 0
-    g.scoreleft = 0
-    g.save!
+    Round.delete_all(game_id: id)
+    Game.delete_all(id: id)
   end
-
+  
   def self.create_game(arr)
     g = Game.new
     g.left = arr[0]
@@ -26,6 +21,36 @@ class Game < ActiveRecord::Base
   def rounds
     Round.where(game_id: id)
   end
+  
+  def end_game
+    cg = ClosedGame.new
+    cg.game_id = self.id
+    cg.left = self.left
+    cg.right = self.right
+    cg.scoreright = self.scoreright
+    cg.scoreleft = self.scoreleft
+    
+    leftstat = UserStat.where(user_id: left).first() 
+    judegestat = UserStat.where(user_id: judge).first() 
+    rightstat = UserStat.where(user_id: right).first() 
+    
+    
+    if self.scoreright > self.scoreleft 
+      rightstat.games_won = rightstat.games_won + 1
+    else  
+      leftstat.games_won = leftstat.games_won + 1
+    end
+    
+    leftstat.games_played = leftstat.games_played + 1
+    rightstat.games_played = rightstat.games_played + 1
+    judgestat.games_judged = judgestat.games_judged + 1
+    
+    leftstat.save!
+    rightstat.save!
+    judgestat.save!
+    Game.delete_game(self.id)
+  end
+  
   def next_on_move
     if onmove == judge 
       if [0,2,4].include?(round)
@@ -46,8 +71,11 @@ class Game < ActiveRecord::Base
     end
   end
   def round_for_rb(rb) 
-    r = (rb+1) / 2 
+    r = rb / 2 + 1
     Round.where(game_id: id, round_num: r).first()
+  end
+  def current_task 
+    Round.where(game_id: id, round_num: self.round).first().task
   end
   def judge_round(who,task) 
     puts "Judge choose #{who}"
@@ -58,9 +86,11 @@ class Game < ActiveRecord::Base
     end
     next_on_move
     self.round = round + 1
-    r = Rounds.new 
+    r = Round.new 
     r.game_id = id
     r.round_num = self.round
+    r.task = task
+    r.save!
   end
   
   def left_user 

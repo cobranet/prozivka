@@ -27,10 +27,17 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id]) 
     @game.judge_round(params[:who].to_i,params[:task])
     @game.save!
-    atr = {
-      action: 'judged'
-    }
-    FayeRails::Controller.publish(all_chanel(@game.id),atr)        
+    if @game.round != 5 
+      atr = {
+        action: 'judged'
+      }
+      FayeRails::Controller.publish(all_chanel(@game.id),atr)        
+    else
+      atr = {
+        action: 'endgame'
+      }
+      FayeRails::Controller.publish(all_chanel(@game.id),atr)        
+    end   
     render :nothing => true
   end
   

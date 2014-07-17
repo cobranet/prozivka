@@ -1,4 +1,6 @@
 Prozivka::Application.routes.draw do
+  resources :closed_games
+
   resources :games do 
     member do
       get  'last_five'

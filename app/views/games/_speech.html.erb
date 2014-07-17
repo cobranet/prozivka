@@ -8,9 +8,9 @@
       <% img = @game.right_user.image %> 
       <% left = false %> 
     <% end %>
-    <% if speech.rb % 2 == 0 %>
+    <% if (speech.rb ) % 2 == 0 %>
        <%= speech.rb %>
-       <%= @game.round_for_rb(1).task %>
+       <%= @game.round_for_rb(speech.rb+1).task %>
     <% end %> 
     <% if left == false %> 
           <table class="spp"><tr>

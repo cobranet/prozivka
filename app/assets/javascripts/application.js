@@ -45,6 +45,7 @@ MP.load_action = function (message) {
  $('#action').load('/games/' + MP.game_id() + '/actions',
 			  function() {
 			       MP.set_speech_button();   
+                               MP.set_judge_buttons();
 			     });
 
 }
@@ -54,6 +55,13 @@ MP.load_title = function(message) {
 }
 
 MP.on_message = function(message) {
+    if (message["action"] == 'startgame'){
+	window.location.href = '/games/' + message["gameid"] ;
+    }
+    if (message["action"] == 'endgame') {
+	alert('endgame');
+
+    }
     if (message["action"] == "newspeech") {
 	MP.load_speech(message);
 	MP.load_action(message);
@@ -89,7 +97,6 @@ MP.game_suscribe = function(){
 
 MP.set_judge_buttons = function() {
     $('#judgeleft').on("click",function(){
-	alert($(this)[0].getAttribute('data-who') );
 	$.ajax({
 	    type: "POST",
 	    url: "/games/" + MP.game_id() + "/judge",
@@ -140,4 +147,5 @@ $().ready(function(){
     });
     MP.set_speech_button();
     MP.set_judge_buttons();
+
 });
