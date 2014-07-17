@@ -61,6 +61,8 @@ class Game < ActiveRecord::Base
     r = Rounds.new 
     r.game_id = id
     r.round_num = self.round
+    r.task = task
+    r.save!
   end
   
   def left_user 

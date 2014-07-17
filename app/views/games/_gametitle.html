@@ -1,0 +1,14 @@
+  <h4>
+    <table id="tit">
+      <tr>
+	<td><%=@game.left_user.name%></td>
+	<td><%= "ROUND  #{@game.round}"%></td>
+	<td><%=@game.right_user.name%></td>
+      </tr>
+      <tr> 
+	<td><%=@game.scoreleft%></td>
+	<td><%="Judged by #{@game.judge_user.name}"%></td>
+	<td><%=@game.scoreright%></td>
+      </tr>
+    </table>
+  </h4>

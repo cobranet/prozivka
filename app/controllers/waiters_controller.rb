@@ -2,6 +2,7 @@ class WaitersController < ApplicationController
   def index
     @show_login = true
     @show_title = true
+    @show_gametitle = false
     @waiters = Waiter.all
   end
   def create

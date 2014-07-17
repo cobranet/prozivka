@@ -17,14 +17,19 @@
   <%end%>
   <div class = "container"> 
     <% if @show_login %> 
-      <div class = "row" id="clogin" %> 
+      <div class = "row" id="clogin"> 
         <%= yield :login  %>
       </div>
     <% end %> 
     
     <% if @show_title   %> 
-      <div class = "row jumbotron" id="ctitle" 
+      <div class = "row jumbotron" id="ctitle"> 
 	 <%= yield :title %>
+      </div> 
+    <% end %>
+    <% if @show_gametitle   %> 
+      <div class = "row" id="gametitle">
+	 <%= yield :gametitle %>
       </div> 
     <% end %>
     <div class = "row lll" id="main">

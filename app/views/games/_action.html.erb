@@ -1,9 +1,35 @@
-  <% if @game.onmove == current_user.id %> 
-    <%= text_field_tag("new_speech",'',class: "newspeach" ,id: "new_speech" , maxlenght: 80 ) %><br/>
-    <%= tag("button",{class: "btn btn-primary bthint",id: "nsbutton" , data: { game: @game.id }   },true) %>
-	  <i class="icon-white icon-hand-right"> </i>
-	 Isprozivaj!! 
-        </button> 
+  <% if @game.onmove == current_user.id  %> 
+    <% if @game.onmove != @game.judge %>
+      <%= text_field_tag("new_speech",'',class: "newspeach" ,id: "new_speech" , maxlenght: 80 ) %><br/>
+      <%= tag("button",{class: "btn btn-primary bthint",id: "nsbutton" , data: { game: @game.id }   },true) %>
+	<i class="icon-white icon-hand-right"> </i>
+	  Isprozivaj!! 
+      </button>
+    <% else %> 
+     <div id="judgediv" %>
+        <div id = "taskdiv">
+          Give player task for the round : <%= text_field_tag("task",'',class: "task" ,id: "task" , maxlenght: 80 ) %><br/>
+        </div>
+        <% if @game.round != 0 %>
+          <%= tag("button",{class: "btn btn-primary btjudge",id: "judgeleft" , data: { game: @game.id , who:@game.left }   },true) %>
+            <i class="icon-white icon-hand-left"> </i>
+	    Left
+          </button>
+          <%= tag("button",{class: "btn btn-primary btjudge",id: "judgeright" , data: { game: @game.id , who:@game.right }   },true) %>
+	    <i class="icon-white icon-hand-right"> </i>
+	      Right
+            </button>
+       <% else %>
+         <%= tag("button",{class: "btn btn-primary btjudgestart",id: "judgestart" , data: { game: @game.id  }   },true) %>
+	   <i class="icon-white icon-start"> </i>
+	     Start
+           </button>
+
+       <% end %> 
+    <% end %>
   <% else %> 
     <%= "Waiting for #{@game.user_on_move.name}" %>
   <% end %>
+
+
+

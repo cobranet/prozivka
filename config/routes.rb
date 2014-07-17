@@ -3,7 +3,10 @@ Prozivka::Application.routes.draw do
     member do
       get  'last_five'
       get  'actions'
+      get  'gametitle'
+      post 'startround'
       post 'make_speech'
+      post 'judge'
     end
   end
 

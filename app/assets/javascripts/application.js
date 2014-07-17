@@ -34,19 +34,43 @@ MP.onmove = function(){
 }
 
 
-
-
-MP.on_message = function(message) {
-    if (message["action"] == "newspeech") {
-	$('#speech').load('/games/' + MP.game_id() + '/last_five',
+MP.load_speech = function(message) {
+  $('#speech').load('/games/' + MP.game_id() + '/last_five',
 			  function() {
 			      MP.set_on_move(message["onmove"])
+			      MP.set_judge_buttons();
 			  });
-	$('#action').load('/games/' + MP.game_id() + '/actions',
+}
+MP.load_action = function (message) {
+ $('#action').load('/games/' + MP.game_id() + '/actions',
 			  function() {
 			       MP.set_speech_button();   
 			     });
+
+}
+
+MP.load_title = function(message) {
+  $('#gametitle').load('/games/' + MP.game_id() + '/gametitle');
+}
+
+MP.on_message = function(message) {
+    if (message["action"] == "newspeech") {
+	MP.load_speech(message);
+	MP.load_action(message);
+	MP.load_title(message);
     }
+    if (message["action"] == "judged") {
+	MP.load_speech(message);
+	MP.load_action(message);
+	MP.load_title(message);
+    }
+    if (message["action"] == "startround") {
+	MP.load_speech(message);
+	MP.load_action(message);
+	MP.load_title(message);
+    }
+
+
 }
 
 MP.set_on_move = function(onmove){
@@ -60,6 +84,40 @@ MP.game_suscribe = function(){
 	    MP.on_message(message);
 	});
   }
+}
+
+
+MP.set_judge_buttons = function() {
+    $('#judgeleft').on("click",function(){
+	alert($(this)[0].getAttribute('data-who') );
+	$.ajax({
+	    type: "POST",
+	    url: "/games/" + MP.game_id() + "/judge",
+	    data: {
+		  who: $(this)[0].getAttribute('data-who'),
+		  task: $('#task').val() 
+		}
+	});
+    });
+    $('#judgeright').on("click",function(){
+	$.ajax({
+	    type: "POST",
+	    url: "/games/" + MP.game_id() + "/judge",
+	    data: {
+		  who: $(this)[0].getAttribute('who'),
+		  task: $('#task').val() 
+		}
+	});
+    });
+
+    $('#judgestart').on("click",function(){
+	$.ajax({
+	    type: "POST",
+	    url: "/games/" + MP.game_id() + "/startround",
+	    data: {task: $('#task').val() }
+	});
+    });
+
 }
 
 MP.set_speech_button = function() {    
@@ -81,4 +139,5 @@ $().ready(function(){
 	MP.on_message(message);
     });
     MP.set_speech_button();
+    MP.set_judge_buttons();
 });

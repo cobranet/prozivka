@@ -1321,3 +1321,18 @@ td.leftimage {
 .spp {
     width:100%;
 }
+
+#tit {
+    width: 100%;
+    text-align: center;
+}
+#tit td {
+    border: 1px solid gold;
+    background-color: blue;
+    color: white;
+}
+
+#judgediv {
+    width: 100%;
+    text-align: center;
+}
