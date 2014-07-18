@@ -59,8 +59,7 @@ MP.on_message = function(message) {
 	window.location.href = '/games/' + message["gameid"] ;
     }
     if (message["action"] == 'endgame') {
-	alert('endgame');
-
+	window.location.href = '/closed_games/' +MP.game_id();	
     }
     if (message["action"] == "newspeech") {
 	MP.load_speech(message);

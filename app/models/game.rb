@@ -29,9 +29,10 @@ class Game < ActiveRecord::Base
     cg.right = self.right
     cg.scoreright = self.scoreright
     cg.scoreleft = self.scoreleft
+    cg.save!
     
     leftstat = UserStat.where(user_id: left).first() 
-    judegestat = UserStat.where(user_id: judge).first() 
+    judgestat = UserStat.where(user_id: judge).first() 
     rightstat = UserStat.where(user_id: right).first() 
     
     
@@ -84,13 +85,20 @@ class Game < ActiveRecord::Base
      else
       self.scoreright = self.scoreright + 1
     end
-    next_on_move
-    self.round = round + 1
-    r = Round.new 
-    r.game_id = id
-    r.round_num = self.round
-    r.task = task
-    r.save!
+    if self.round == 5 
+      end_game
+      return true
+    else
+      next_on_move
+      self.round = round + 1
+      r = Round.new 
+      r.game_id = id
+      r.round_num = self.round
+      r.task = task
+      r.save!
+      save!
+      return false
+    end   
   end
   
   def left_user 

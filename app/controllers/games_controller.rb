@@ -25,9 +25,8 @@ class GamesController < ApplicationController
   
   def judge
     @game = Game.find(params[:id]) 
-    @game.judge_round(params[:who].to_i,params[:task])
-    @game.save!
-    if @game.round != 5 
+    is_end = @game.judge_round(params[:who].to_i,params[:task])
+    if is_end == false  
       atr = {
         action: 'judged'
       }

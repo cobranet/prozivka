@@ -9,9 +9,17 @@ class User < ActiveRecord::Base
       user.oauth_token = auth.credentials.token
       user.oauth_expires_at = Time.at(auth.credentials.expires_at)
       user.save!
+      if UserStat.where(user_id: user.id).first() == nil 
+        us = UserStat.new
+        us.user_id = user.id
+        us.games_won = 0
+        us.games_played  = 0
+        us.games_judged = 0
+        us.save!
+      end  
     end
   end
-
+  
   def waiting?
     not Waitingplayer.find_by( user_id: id ) == nil
   end
